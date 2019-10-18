@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# Copyright (c) 2019 Dalmon Ian <dalmonimo@gmail.com>
+# 
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+: ${res:=1366x768}
+: ${out:=HDMI-1}
+: ${main:=eDP-1}
+
+while getopts r:o:m: opt; do
+	case "$opt" in
+	r) res="$OPTARG";;
+	o) out="$OPTARG";;
+	m) main="$OPTARG";;
+	*) print "usage: $0 [-r res] [-o screen] [-m screen] mode" >&2
+	   exit 1
+	esac
+done
+
+shift $(( OPTIND - 1 ))
+
+: ${mode:=$1}
+case "${mode:-mirror}" in
+mirror)  xrandr --output ${out} --auto --same-as ${main} --mode ${res} ;;
+list)    xrandr ;;
+left)    xrandr --output ${out} --auto --left-of ${main} ;;
+right)   xrandr --output ${out} --auto --right-of ${main} ;;
+disable) xrandr --output ${out} --off ;;
+*)       print "unreconized mode ${mode}" >&2
+         exit 1
+esac
