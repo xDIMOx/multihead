@@ -23,7 +23,7 @@ while getopts r:o:m: opt; do
 	r) res="$OPTARG";;
 	o) out="$OPTARG";;
 	m) main="$OPTARG";;
-	*) print "usage: $0 [-r res] [-o screen] [-m screen] mode" >&2
+	*) echo "usage: $0 [-r res] [-o screen] [-m screen] mode" >&2
 	   exit 1
 	esac
 done
@@ -37,6 +37,6 @@ list)    xrandr ;;
 left)    xrandr --output ${out} --auto --left-of ${main} ;;
 right)   xrandr --output ${out} --auto --right-of ${main} ;;
 disable) xrandr --output ${out} --off ;;
-*)       print "unreconized mode ${mode}" >&2
+*)       echo "unreconized mode ${mode}" >&2
          exit 1
 esac
