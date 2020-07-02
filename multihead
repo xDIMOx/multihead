@@ -32,11 +32,11 @@ shift $(( OPTIND - 1 ))
 
 : ${cmd:=$1}
 case "${cmd:-mirror}" in
-mirror)  xrandr --output ${out} --auto --same-as ${main} --mode ${res} ;;
-list)    xrandr ;;
-left)    xrandr --output ${out} --auto --left-of ${main}  --mode ${res} ;;
-right)   xrandr --output ${out} --auto --right-of ${main} --mode ${res}  ;;
-disable) xrandr --output ${out} --off ;;
+m|mirror)  xrandr --output ${out} --auto --same-as ${main} --mode ${res} ;;
+ls|list)   xrandr ;;
+l|left)    xrandr --output ${out} --auto --left-of ${main}  --mode ${res} ;;
+r|right)   xrandr --output ${out} --auto --right-of ${main} --mode ${res}  ;;
+d|disable) xrandr --output ${out} --off ;;
 *)       echo "unreconized command ${cmd}" >&2
          exit 1
 esac
