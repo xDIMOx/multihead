@@ -30,13 +30,13 @@ done
 
 shift $(( OPTIND - 1 ))
 
-: ${mode:=$1}
-case "${mode:-mirror}" in
+: ${cmd:=$1}
+case "${cmd:-mirror}" in
 mirror)  xrandr --output ${out} --auto --same-as ${main} --mode ${res} ;;
 list)    xrandr ;;
 left)    xrandr --output ${out} --auto --left-of ${main}  --mode ${res} ;;
 right)   xrandr --output ${out} --auto --right-of ${main} --mode ${res}  ;;
 disable) xrandr --output ${out} --off ;;
-*)       echo "unreconized mode ${mode}" >&2
+*)       echo "unreconized command ${cmd}" >&2
          exit 1
 esac
